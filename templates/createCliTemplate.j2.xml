@@ -1,0 +1,22 @@
+<ns1:run-cli-configuration-request xmlns:ns1="urn:cisco:params:xml:ns:yang:ra:v1" xmlns:ns2="urn:cisco:params:xml:ns:yang:nrf-common:v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:cisco:params:xml:ns:yang:ra:v1 cisco-resource-activation.xsd ">
+  <ns1:run-cli-configuration>
+    <ns1:template-name>{{templateName}}</ns1:template-name>
+    <ns1:target-list>
+      {% for node in nodes %}
+      <ns1:target>
+        <ns1:node-ref>MD=CISCO_EPNM!ND={{ node.name }}</ns1:node-ref>
+        <ns1:parameter-list>
+          {% if params %}
+            {% for param in params %}
+              <ns1:parameter>
+                <ns1:name>{{ param.name }}</ns1:name>
+                <ns1:value>{{ param.value }}</ns1:value>
+              </ns1:parameter>
+            {% endfor %}
+          {% endif %}
+        </ns1:parameter-list>
+      </ns1:target>
+      {% endfor %}
+    </ns1:target-list>
+  </ns1:run-cli-configuration>
+</ns1:run-cli-configuration-request>
